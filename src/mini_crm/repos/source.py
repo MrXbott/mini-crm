@@ -1,12 +1,9 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, func
 
-from mini_crm.schemas.sources import SourceCreateData, SourceFromDB
-from mini_crm.schemas.operators import OperatorFromDB, AssignedOperatorData
-from mini_crm.models.sources import SourceModel
-from mini_crm.models.operators import OperatorModel
-from mini_crm.models.contacts import ContactModel
-from mini_crm.models.sources_operators import SourceOperatorModel
+from mini_crm.schemas import SourceCreateData, SourceFromDB, OperatorFromDB, AssignedOperatorData
+from mini_crm.models import SourceModel, OperatorModel, ContactModel, SourceOperatorModel
+
 
 class SourceRepo:
     def __init__(self, session: AsyncSession):

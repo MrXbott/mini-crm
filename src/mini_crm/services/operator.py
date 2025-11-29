@@ -1,6 +1,6 @@
 
-from mini_crm.repos.operator import OperatorRepo
-from mini_crm.schemas.operators import OperatorCreateData, OperatorUpdateData, OperatorFromDB
+from mini_crm.repos import OperatorRepo
+from mini_crm.schemas import OperatorCreateData, OperatorUpdateData, OperatorFromDB
 
 class OperatorService:
     def __init__(self, repo: OperatorRepo) -> None:

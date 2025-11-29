@@ -1,8 +1,8 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 
-from mini_crm.schemas.sources_operators import SourceOperatorFromDB
-from mini_crm.models.sources_operators import SourceOperatorModel
+from mini_crm.schemas import SourceOperatorFromDB
+from mini_crm.models import SourceOperatorModel
 
 class SourceOperatorRepo:
     def __init__(self, session: AsyncSession):

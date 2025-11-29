@@ -1,8 +1,7 @@
 from fastapi import APIRouter, HTTPException, Depends
 
-from mini_crm.schemas.contacts import ContactCreateData
-from mini_crm.schemas.contacts import ContactCreateData, ContactFromDB
-from mini_crm.services.contact import ContactService
+from mini_crm.schemas import ContactCreateData, ContactFromDB
+from mini_crm.services import ContactService
 from mini_crm.dependencies.services import get_contact_service
 
 

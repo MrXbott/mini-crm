@@ -1,8 +1,8 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, update
 
-from mini_crm.schemas.leads import LeadCreateData, LeadFromDB
-from mini_crm.models.leads import LeadModel
+from mini_crm.schemas import LeadCreateData, LeadFromDB
+from mini_crm.models import LeadModel
 
 class LeadRepo:
     def __init__(self, session: AsyncSession):

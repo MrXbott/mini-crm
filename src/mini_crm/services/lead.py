@@ -1,5 +1,5 @@
-from mini_crm.repos.lead import LeadRepo
-from mini_crm.schemas.leads import LeadCreateData, LeadFromDB
+from mini_crm.repos import LeadRepo
+from mini_crm.schemas import LeadCreateData, LeadFromDB
 
 class LeadService:
     def __init__(self, repo: LeadRepo) -> None:

@@ -1,12 +1,12 @@
 import random
 
-from mini_crm.repos.contact import ContactRepo
-from mini_crm.schemas.contacts import ContactCreateData, ContactFromDB
-from mini_crm.schemas.leads import LeadCreateData
+from mini_crm.repos import ContactRepo
+from mini_crm.schemas import ContactCreateData, ContactFromDB, LeadCreateData
+
 from mini_crm.services.operator import OperatorService
 from mini_crm.services.source import SourceService
 from mini_crm.services.lead import LeadService
-
+# from mini_crm.services import OperatorService, SourceService, LeadService
 
 class ContactService:
     def __init__(self, repo: ContactRepo, 

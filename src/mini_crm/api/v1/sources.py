@@ -1,10 +1,8 @@
 from fastapi import APIRouter, HTTPException, Depends
 
 from mini_crm.dependencies.services import get_source_service, get_source_operator_service
-from mini_crm.services.source import SourceService
-from mini_crm.services.source_operator import SourceOperatorService
-from mini_crm.schemas.sources import SourceCreateData, SourceFromDB
-from mini_crm.schemas.sources_operators import SourceOperatorData, SourceOperatorFromDB
+from mini_crm.services import SourceService, SourceOperatorService
+from mini_crm.schemas import SourceCreateData, SourceFromDB, SourceOperatorData, SourceOperatorFromDB
 
 
 router = APIRouter(prefix='/sources')
@@ -22,7 +20,6 @@ async def list_sources(service: SourceService = Depends(get_source_service)):
         return await service.get_all_sources()
     except Exception as e:
         raise HTTPException(500, str(e))
-
 
 @router.post('/{source_id}/assign_operator', response_model=SourceOperatorFromDB)
 async def assign_operator_to_source(source_id: int, data: SourceOperatorData, service: SourceOperatorService = Depends(get_source_operator_service)):

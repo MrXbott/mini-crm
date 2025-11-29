@@ -1,8 +1,8 @@
 
-from mini_crm.repos.source import SourceRepo
-from mini_crm.schemas.sources import SourceCreateData, SourceFromDB
+from mini_crm.repos import SourceRepo
+from mini_crm.schemas import SourceCreateData, SourceFromDB, AssignedOperatorData
+# from mini_crm.schemas.operators import AssignedOperatorData
 
-from mini_crm.schemas.operators import AssignedOperatorData
 
 class SourceService:
     def __init__(self, repo: SourceRepo) -> None:

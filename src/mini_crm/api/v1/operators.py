@@ -1,8 +1,8 @@
 from fastapi import APIRouter, HTTPException, Depends
 
 from mini_crm.dependencies.services import get_operator_service
-from mini_crm.schemas.operators import OperatorCreateData, OperatorUpdateData, OperatorFromDB
-from mini_crm.services.operator import OperatorService
+from mini_crm.schemas import OperatorCreateData, OperatorUpdateData, OperatorFromDB
+from mini_crm.services import OperatorService
 
 router = APIRouter(prefix='/operators')
 

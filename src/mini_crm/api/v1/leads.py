@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException
 
 from mini_crm.dependencies.services import get_lead_service
-from mini_crm.services.lead import LeadService
-from mini_crm.schemas.leads import LeadCreateData, LeadFromDB
+from mini_crm.services import LeadService
+from mini_crm.schemas import LeadCreateData, LeadFromDB
 
 router = APIRouter(prefix='/leads')
 

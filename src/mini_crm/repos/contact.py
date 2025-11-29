@@ -1,8 +1,8 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, func
 
-from mini_crm.models.contacts import ContactModel
-from mini_crm.schemas.contacts import ContactFromDB
+from mini_crm.models import ContactModel
+from mini_crm.schemas import ContactFromDB
 
 class ContactRepo:
     def __init__(self, session: AsyncSession) -> None:

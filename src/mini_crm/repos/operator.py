@@ -1,8 +1,8 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, update
 
-from mini_crm.schemas.operators import OperatorCreateData, OperatorUpdateData, OperatorFromDB
-from mini_crm.models.operators import OperatorModel
+from mini_crm.schemas import OperatorCreateData, OperatorUpdateData, OperatorFromDB
+from mini_crm.models import OperatorModel
 
 class OperatorRepo:
     def __init__(self, session: AsyncSession):
