@@ -1,0 +1,28 @@
+[project]
+name = "mini-crm"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Mr.Xbott",email = "mr.xbott@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "fastapi (>=0.122.0,<0.123.0)",
+    "sqlalchemy (>=2.0.44,<3.0.0)",
+    "aiosqlite (>=0.21.0,<0.22.0)",
+    "uvicorn (>=0.38.0,<0.39.0)",
+    "pydantic-settings (>=2.12.0,<3.0.0)"
+]
+
+[tool.poetry]
+packages = [{include = "mini_crm", from = "src"}]
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[dependency-groups]
+dev = [
+    "pytest (>=9.0.1,<10.0.0)"
+]
