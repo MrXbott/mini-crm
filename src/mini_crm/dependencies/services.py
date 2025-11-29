@@ -15,25 +15,45 @@ from mini_crm.services import (OperatorService,
                                SourceOperatorService,
                                ContactService)
 
-async def get_operator_service(session: AsyncSession = Depends(get_db_session)) -> OperatorService:
-    return OperatorService(repo=OperatorRepo(session=session))
 
-async def get_lead_service(session: AsyncSession = Depends(get_db_session)) -> LeadService:
-    return LeadService(repo=LeadRepo(session=session))
+# ----- repos -----
 
-async def get_source_service(session: AsyncSession = Depends(get_db_session)) -> SourceService:
-    return SourceService(repo=SourceRepo(session=session))
+async def get_operator_repo(session: AsyncSession = Depends(get_db_session)) -> OperatorRepo:
+    return OperatorRepo(session)
 
-async def get_source_operator_service(session: AsyncSession = Depends(get_db_session)) -> SourceOperatorService:
-    return SourceOperatorService(repo=SourceOperatorRepo(session=session))
+async def get_lead_repo(session: AsyncSession = Depends(get_db_session)) -> LeadRepo:
+    return LeadRepo(session)
 
-async def get_contact_service(session: AsyncSession = Depends(get_db_session), 
-                              operator_service=Depends(get_operator_service), 
-                              source_service=Depends(get_source_service), 
-                              lead_service=Depends(get_lead_service)
+async def get_source_repo(session: AsyncSession = Depends(get_db_session)) -> SourceRepo:
+    return SourceRepo(session)
+
+async def get_source_operator_repo(session: AsyncSession = Depends(get_db_session)) -> SourceOperatorRepo:
+    return SourceOperatorRepo(session)
+
+async def get_contact_repo(session: AsyncSession = Depends(get_db_session)) -> ContactRepo:
+    return ContactRepo(session)
+
+# ----- services -----
+
+async def get_operator_service(repo: OperatorRepo = Depends(get_operator_repo)) -> OperatorService:
+    return OperatorService(repo)
+
+async def get_lead_service(repo: LeadRepo = Depends(get_lead_repo)) -> LeadService:
+    return LeadService(repo)
+
+async def get_source_service(repo: SourceRepo = Depends(get_source_repo)) -> SourceService:
+    return SourceService(repo)
+
+async def get_source_operator_service(repo: SourceOperatorRepo = Depends(get_source_operator_repo)) -> SourceOperatorService:
+    return SourceOperatorService(repo)
+
+async def get_contact_service(repo: ContactRepo = Depends(get_contact_repo), 
+                              operator_repo: OperatorRepo = Depends(get_operator_repo), 
+                              source_repo: SourceRepo = Depends(get_source_repo), 
+                              lead_repo: LeadRepo = Depends(get_lead_repo)
                               ) -> ContactService:
-    return ContactService(repo=ContactRepo(session=session), 
-                          operator_service=operator_service,
-                          source_service=source_service,
-                          lead_service=lead_service
+    return ContactService(repo=repo, 
+                          operator_repo=operator_repo,
+                          source_repo=source_repo,
+                          lead_repo=lead_repo
                           )

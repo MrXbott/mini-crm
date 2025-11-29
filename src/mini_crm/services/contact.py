@@ -1,39 +1,35 @@
 import random
 
-from mini_crm.repos import ContactRepo
+from mini_crm.repos import ContactRepo, OperatorRepo, SourceRepo, LeadRepo
 from mini_crm.schemas import ContactCreateData, ContactFromDB, LeadCreateData
 
-from mini_crm.services.operator import OperatorService
-from mini_crm.services.source import SourceService
-from mini_crm.services.lead import LeadService
-# from mini_crm.services import OperatorService, SourceService, LeadService
 
 class ContactService:
     def __init__(self, repo: ContactRepo, 
-                 operator_service: OperatorService, 
-                 source_service: SourceService, 
-                 lead_service: LeadService) -> None:
+                 operator_repo: OperatorRepo, 
+                 source_repo: SourceRepo, 
+                 lead_repo: LeadRepo) -> None:
         self.repo = repo
-        self.operator_service = operator_service
-        self.source_service = source_service
-        self.lead_service = lead_service
+        self.operator_repo = operator_repo
+        self.source_repo = source_repo
+        self.lead_repo = lead_repo
 
 
     async def create_new_contact(self, data: ContactCreateData) -> ContactFromDB:
         # check the source exists
-        source = await self.source_service.get_source_by_id(data.source_id)
+        source = await self.source_repo.get_by_id(data.source_id)
 
         # find or create lead
-        lead = await self.lead_service.get_lead_by_email(data.lead_email)
+        lead = await self.lead_repo.get_by_email(data.lead_email)
         if not lead:
             lead_data = LeadCreateData(email=data.lead_email,
                                    first_name=data.lead_first_name,
                                    last_name=data.lead_last_name,
                                    )
-            lead = await self.lead_service.create_new_lead(lead_data)
+            lead = await self.lead_repo.create(lead_data)
 
         # get all active assigned operators with weights and current capacity
-        assigned_operators = await self.source_service.get_assigned_operators_for_source(source.id)
+        assigned_operators = await self.source_repo.get_assigned_operators(source.id)
 
         # create a list of available operators with weights and current capacity
         available_operators = []
