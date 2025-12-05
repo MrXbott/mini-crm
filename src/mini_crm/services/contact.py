@@ -1,7 +1,8 @@
 import random
+import bisect
 
 from mini_crm.repos import ContactRepo, OperatorRepo, SourceRepo, LeadRepo
-from mini_crm.schemas import ContactCreateData, ContactFromDB, LeadCreateData
+from mini_crm.schemas import ContactCreateData, ContactFromDB, LeadCreateData, AssignedOperatorData
 
 
 class ContactService:
@@ -14,6 +15,17 @@ class ContactService:
         self.source_repo = source_repo
         self.lead_repo = lead_repo
 
+    def choose_the_operator(self, operators: list[AssignedOperatorData]) -> AssignedOperatorData:
+        # weighted random choice with binary search
+        lookup = []
+        total = 0
+        for op in operators:
+            total += op.weight
+            lookup.append(total)
+        random_number = random.randint(1, total)
+        idx = bisect.bisect_left(lookup, random_number)
+
+        return operators[idx]
 
     async def create_new_contact(self, data: ContactCreateData) -> ContactFromDB:
         # check the source exists
@@ -42,16 +54,9 @@ class ContactService:
             await self.repo.create(source_id=source.id, lead_id=lead.id)
             raise Exception('Available operator not found, but your contact was created')
         
-        # weighted random choice
-        total_weights = sum(op.weight for op in available_operators)
-        random_number = random.uniform(0, total_weights)
-        upto = 0
-        chosen_operator = None
-        for op in available_operators:
-            upto += op.weight
-            if random_number <= upto:
-                chosen_operator = op
-                break
+        # choose the operator from the list of available operators
+        chosen_operator = self.choose_the_operator(available_operators)
+
         
         # create and return a new contact with assigned operator
         return await self.repo.create(source_id=source.id, lead_id=lead.id, operator_id=chosen_operator.operator.id)
